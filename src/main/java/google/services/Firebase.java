@@ -21,7 +21,7 @@ public class Firebase {
     private FirebaseApp app;
     
     public Firebase() {
-        LOGGER.info("m=Firebase stage=init");
+        LOGGER.debug("m=Firebase stage=init");
         try {
             var classloader = Thread.currentThread().getContextClassLoader();
             var file = new File(classloader.getResource(SERVICE_ACCOUNT_FILE).getFile());
@@ -37,7 +37,7 @@ public class Firebase {
             LOGGER.error("m=Firebase stage=error stacktrace={}" + e.getStackTrace());
             System.exit(0);
         }
-        LOGGER.info("m=Firebase stage=end");
+        LOGGER.debug("m=Firebase stage=end");
     }
     
     public FirebaseApp getApp() {

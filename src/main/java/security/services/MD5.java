@@ -13,14 +13,14 @@ public class MD5 {
     private MD5() {}
     
     public static String generateHash(String message) {
-        LOGGER.info("m=generateHash stage=init message={}", message);
+        LOGGER.debug("m=generateHash stage=init message={}", message);
         
         try {
             var m = MessageDigest.getInstance("MD5");
             m.update(message.getBytes(), 0, message.length());
             var hash = new BigInteger(1, m.digest()).toString(16);
             
-            LOGGER.info("m=generateHash stage=end hash={}", hash);
+            LOGGER.debug("m=generateHash stage=end hash={}", hash);
             return hash;
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error("m=generateHash stage=error message={}", message);

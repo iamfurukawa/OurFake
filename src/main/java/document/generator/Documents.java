@@ -18,38 +18,38 @@ public class Documents {
     private Documents() { }
     
     public static String generateCPF(boolean withMask) {
-        LOGGER.info("m=generateCPF stage=init withMask={}", withMask);
+        LOGGER.debug("m=generateCPF stage=init withMask={}", withMask);
         var cpf = gerarCPFCNPJ(9, MULTIPLICADORES_CPF);
-        LOGGER.info("m=generateCPF stage=end cpf={}", cpf);
+        LOGGER.debug("m=generateCPF stage=end cpf={}", cpf);
         return withMask ? formatarCPF(cpf) : cpf;
     }
     
     public static String generateCNPJ(boolean withMask) {
-        LOGGER.info("m=generateCNPJ stage=init withMask={}", withMask);
+        LOGGER.debug("m=generateCNPJ stage=init withMask={}", withMask);
         var cnpj = gerarCPFCNPJ(12, MULTIPLICADORES_CNPJ);
-        LOGGER.info("m=generateCNPJ stage=end cnpj={}", cnpj);
+        LOGGER.debug("m=generateCNPJ stage=end cnpj={}", cnpj);
         return withMask ? formatarCNPJ(cnpj) : cnpj;
     }
     
     private static String formatarCPF(String cpf) {
-        LOGGER.info("m=formatarCPF stage=init cpf={}", cpf);
+        LOGGER.debug("m=formatarCPF stage=init cpf={}", cpf);
         if (cpf == null || cpf.length() != 11) {
             LOGGER.error("m=formatarCPF stage=error CPF deve possuir 11 dígitos");
             throw new IllegalArgumentException("CPF deve possuir 11 dígitos");
         }
     
-        LOGGER.error("m=formatarCPF stage=end");
+        LOGGER.debug("m=formatarCPF stage=end");
         return String.format("%s.%s.%s-%s", cpf.substring(0, 3), cpf.substring(3, 6), cpf.substring(6, 9), cpf.substring(9, 11));
     }
     
     private static String formatarCNPJ(String cnpj) {
-        LOGGER.info("m=formatarCNPJ stage=init cnpj={}", cnpj);
+        LOGGER.debug("m=formatarCNPJ stage=init cnpj={}", cnpj);
         if (cnpj == null || cnpj.length() != 14) {
             LOGGER.error("m=formatarCNPJ stage=error CPF deve possuir 14 dígitos");
             throw new IllegalArgumentException("CNPJ deve possuir 14 dígitos");
         }
     
-        LOGGER.error("m=formatarCNPJ stage=end");
+        LOGGER.debug("m=formatarCNPJ stage=end");
         return String.format("%s.%s.%s/%s-%s", cnpj.substring(0, 2), cnpj.substring(2, 5), cnpj.substring(5, 8), cnpj.substring(8, 12), cnpj.substring(12, 14));
     }
     

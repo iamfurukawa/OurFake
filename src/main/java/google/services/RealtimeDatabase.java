@@ -23,15 +23,15 @@ public class RealtimeDatabase extends Firebase {
     private SMSMessage lastRead = null;
     
     public RealtimeDatabase(final String phoneNumber) {
-        LOGGER.info("m=RealtimeDatabase stage=init phoneNumber={}", phoneNumber);
+        LOGGER.debug("m=RealtimeDatabase stage=init phoneNumber={}", phoneNumber);
         reference = FirebaseDatabase.getInstance()
                 .getReference("/")
                 .child(generateHash(phoneNumber));
-        LOGGER.info("m=RealtimeDatabase stage=end");
+        LOGGER.debug("m=RealtimeDatabase stage=end");
     }
     
     public void createOrUpdate(final SMSMessage message) {
-        LOGGER.info("m=createOrUpdate stage=init data={}", message);
+        LOGGER.debug("m=createOrUpdate stage=init data={}", message);
         
         try {
             reference.updateChildrenAsync(message.toMap()).get();
@@ -39,31 +39,31 @@ public class RealtimeDatabase extends Firebase {
             LOGGER.error("m=createOrUpdate stage=error stacktrace={}", e.getStackTrace());
         }
         
-        LOGGER.info("m=createOrUpdate stage=end");
+        LOGGER.debug("m=createOrUpdate stage=end");
     }
     
     public SMSMessage retrieve() throws InterruptedException {
-        LOGGER.info("m=retrieve stage=init");
+        LOGGER.debug("m=retrieve stage=init");
         Semaphore semaphore = new Semaphore(0);
         
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                LOGGER.info("m=onDataChange stage=init data={}", dataSnapshot.getValue());
+                LOGGER.debug("m=onDataChange stage=init data={}", dataSnapshot.getValue());
     
                 lastRead = dataSnapshot.getValue(SMSMessage.class);
-                LOGGER.info("m=onDataChange stage=end data={}", lastRead.getMessage());
+                LOGGER.debug("m=onDataChange stage=end data={}", lastRead.getMessage());
                 semaphore.release();
             }
         
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                LOGGER.info("m=retrieve stage=onCancelled error={}", databaseError.getMessage());
+                LOGGER.debug("m=retrieve stage=onCancelled error={}", databaseError.getMessage());
             }
         });
         
         semaphore.acquire();
-        LOGGER.info("m=retrieve stage=end");
+        LOGGER.debug("m=retrieve stage=end");
         return lastRead;
     }
 }

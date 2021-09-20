@@ -47,18 +47,18 @@ public class SMSMessage {
     }
     
     public Optional<String> findDigits() {
-        LOGGER.info("m=findDigits stage=init message={}", message);
+        LOGGER.debug("m=findDigits stage=init message={}", message);
         var matcher = Pattern.compile("[0-9]{6}")
                 .matcher(message);
     
         
         if (matcher.find()) {
             var digits = matcher.group().trim();
-            LOGGER.info("m=findDigits stage=end digits={}", digits);
+            LOGGER.debug("m=findDigits stage=end digits={}", digits);
             return Optional.of(digits);
         }
     
-        LOGGER.info("m=findDigits stage=error Digits not found returning null.");
+        LOGGER.debug("m=findDigits stage=error Digits not found returning null.");
         return Optional.empty();
     }
     

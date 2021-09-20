@@ -22,7 +22,7 @@ public class MailService implements MailServiceConnections {
     private final Gson gson = new Gson();
     
     public MailService() {
-        LOGGER.info("m=MailService stage=init starting a mail service");
+        LOGGER.debug("m=MailService stage=init starting a mail service");
         var cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
     
@@ -30,35 +30,35 @@ public class MailService implements MailServiceConnections {
                 .cookieJar(new JavaNetCookieJar(cookieManager))
                 .build();
         
-        LOGGER.info("m=MailService stage=end");
+        LOGGER.debug("m=MailService stage=end");
     }
     
     public Inbox createNewMailBox() throws Exception {
-        LOGGER.info("m=createNewMailBox stage=init starting a mail service");
+        LOGGER.debug("m=createNewMailBox stage=init starting a mail service");
         var request = new Request.Builder()
                 .url(URL_NEW_MAIL)
                 .get()
                 .build();
     
         client.newCall(request).execute();
-        LOGGER.info("m=createNewMailBox stage=end");
+        LOGGER.debug("m=createNewMailBox stage=end");
         return reset100Minutes();
     }
     
     public Inbox recoverEmailBox() throws Exception {
-        LOGGER.info("m=recoverEmailBox stage=init starting a mail service");
+        LOGGER.debug("m=recoverEmailBox stage=init starting a mail service");
         var request = new Request.Builder()
                 .url(URL_RECOVER_MAIL)
                 .get()
                 .build();
         
         client.newCall(request).execute();
-        LOGGER.info("m=recoverEmailBox stage=end");
+        LOGGER.debug("m=recoverEmailBox stage=end");
         return reset100Minutes();
     }
     
     public Inbox retrieveDataMailBox() throws Exception {
-        LOGGER.info("m=retrieveDataMailBox stage=init starting a mail service");
+        LOGGER.debug("m=retrieveDataMailBox stage=init starting a mail service");
         var request = new Request.Builder()
                 .url(URL_INFO)
                 .get()
@@ -67,16 +67,16 @@ public class MailService implements MailServiceConnections {
         var response = client.newCall(request).execute();
         try {
             var inbox = gson.fromJson(response.body().string(), Inbox.class);
-            LOGGER.info("m=retrieveDataMailBox stage=end");
+            LOGGER.debug("m=retrieveDataMailBox stage=end");
             return inbox;
         } catch (Exception e) {
-            LOGGER.info("m=retrieveDataMailBox stage=error stacktrace={}", e.getStackTrace());
+            LOGGER.debug("m=retrieveDataMailBox stage=error stacktrace={}", e.getStackTrace());
             throw e;
         }
     }
     
     public InboxMail retrieveInboxMail(String mailId) throws Exception {
-        LOGGER.info("m=retrieveInboxMail stage=init starting a mail service");
+        LOGGER.debug("m=retrieveInboxMail stage=init starting a mail service");
         var request = new Request.Builder()
                 .url(URL_MAIL_CONTENT + mailId)
                 .get()
@@ -85,35 +85,35 @@ public class MailService implements MailServiceConnections {
         var response = client.newCall(request).execute();
         try {
             var inboxMail = gson.fromJson(response.body().string(), InboxMail.class);
-            LOGGER.info("m=retrieveInboxMail stage=end");
+            LOGGER.debug("m=retrieveInboxMail stage=end");
             return inboxMail;
         } catch (Exception e) {
-            LOGGER.info("m=retrieveInboxMail stage=error stacktrace={}", e.getStackTrace());
+            LOGGER.debug("m=retrieveInboxMail stage=error stacktrace={}", e.getStackTrace());
             throw e;
         }
     }
     
     public Inbox reset10Minutes() throws Exception {
-        LOGGER.info("m=reset10Minutes stage=init starting a mail service");
+        LOGGER.debug("m=reset10Minutes stage=init starting a mail service");
         var request = new Request.Builder()
                 .url(URL_MORE_10_MINUTES)
                 .get()
                 .build();
     
         client.newCall(request).execute();
-        LOGGER.info("m=reset10Minutes stage=end");
+        LOGGER.debug("m=reset10Minutes stage=end");
         return retrieveDataMailBox();
     }
     
     public Inbox reset100Minutes() throws Exception {
-        LOGGER.info("m=reset100Minutes stage=init starting a mail service");
+        LOGGER.debug("m=reset100Minutes stage=init starting a mail service");
         var request = new Request.Builder()
                 .url(URL_MORE_100_MINUTES)
                 .get()
                 .build();
         
         client.newCall(request).execute();
-        LOGGER.info("m=reset100Minutes stage=end");
+        LOGGER.debug("m=reset100Minutes stage=end");
         return retrieveDataMailBox();
     }
    
