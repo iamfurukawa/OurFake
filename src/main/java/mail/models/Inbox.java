@@ -1,10 +1,10 @@
 package mail.models;
 
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Inbox {
     
@@ -166,14 +166,7 @@ public class Inbox {
     
     @Override
     public String toString() {
-        return "MailInfoResponse{" + "mailGetUser='" + mailGetUser + '\'' + ", mailGetMail='" + mailGetMail + '\''
-                + ", mailGetHost='" + mailGetHost + '\'' + ", mailGetTime=" + mailGetTime + ", mailGetDuetime="
-                + mailGetDuetime + ", mailServerTime=" + mailServerTime + ", mailGetKey='" + mailGetKey + '\''
-                + ", mailLeftTime=" + mailLeftTime + ", mailRecoveringKey='" + mailRecoveringKey + '\''
-                + ", mailRecoveringMail='" + mailRecoveringMail + '\'' + ", sessionId='" + sessionId + '\''
-                + ", permalink=" + permalink.toString() + ", mailList="
-                + mailList.stream().map(permalinkResponse -> permalinkResponse.toString()).collect(Collectors.joining())
-                + '}';
+        return ReflectionToStringBuilder.toString(this);
     }
     
 }

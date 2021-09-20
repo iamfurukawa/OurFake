@@ -21,12 +21,12 @@ public class BankAccountService {
     private final Gson gson = new Gson();
     
     public BankAccount getBankAccountFrom(Bank bank, State state) {
-        LOGGER.info("m=getBankAccount stage=init bank={} state={}", bank.toString(), state.toString());
+        LOGGER.info("m=getBankAccount stage=init bank={} state={}", bank, state);
         //This API is based on https://www.invertexto.com/gerador-de-conta-bancaria
     
         var formBody = new FormBody.Builder()
                 .add("banco", String.valueOf(bank.getId()))
-                .add("estado", state.toString()).build();
+                .add("estado", state.getState()).build();
     
         var request = new Request.Builder()
                 .url(BASE_URL)
@@ -36,7 +36,7 @@ public class BankAccountService {
         try {
             var responseApi = client.newCall(request).execute();
             var response = gson.fromJson(responseApi.body().string(), BankAccount.class);
-            LOGGER.info("m=getBankAccount stage=end response={}", response.toString());
+            LOGGER.info("m=getBankAccount stage=end response={}", response);
             return response;
         } catch (Exception e) {
             LOGGER.error("m=getBankAccount stage=error returning default bank. stacktrace={}", e.getStackTrace());

@@ -1,6 +1,7 @@
 package sms.models;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +43,7 @@ public class SMSMessage {
     
     @Override
     public String toString() {
-        return "SMSMessage{" + "message='" + message + '\'' + ", type=" + type + '}';
+        return ReflectionToStringBuilder.toString(this);
     }
     
     public Optional<String> findDigits() {

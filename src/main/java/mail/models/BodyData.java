@@ -1,6 +1,7 @@
 package mail.models;
 
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 public class BodyData {
     
@@ -47,6 +48,11 @@ public class BodyData {
     public BodyData setBody(String body) {
         this.body = body;
         return this;
+    }
+    
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
     
 }

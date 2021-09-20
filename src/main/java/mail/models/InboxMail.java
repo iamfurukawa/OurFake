@@ -1,6 +1,7 @@
 package mail.models;
 
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import java.util.List;
 
@@ -184,6 +185,11 @@ public class InboxMail {
     public InboxMail setHtmlToPlain(List<String> htmlToPlain) {
         this.htmlToPlain = htmlToPlain;
         return this;
+    }
+    
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
     
 }

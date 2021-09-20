@@ -1,6 +1,7 @@
 package mail.models;
 
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 public class InboxItem {
     
@@ -86,9 +87,7 @@ public class InboxItem {
     
     @Override
     public String toString() {
-        return "MailListResponse{" + "emailId='" + emailId + '\'' + ", from='" + from + '\'' + ", subject='" + subject
-                + '\'' + ", datetime='" + datetime + '\'' + ", datetime2='" + datetime2 + '\'' + ", timeAgo="
-                + timeAgo + ", read=" + read + '}';
+        return ReflectionToStringBuilder.toString(this);
     }
     
 }

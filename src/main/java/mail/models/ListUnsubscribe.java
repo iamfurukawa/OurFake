@@ -1,5 +1,7 @@
 package mail.models;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 import java.util.List;
 
 public class ListUnsubscribe {
@@ -24,6 +26,11 @@ public class ListUnsubscribe {
     public ListUnsubscribe setLinks(List<String> links) {
         this.links = links;
         return this;
+    }
+    
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
     
 }

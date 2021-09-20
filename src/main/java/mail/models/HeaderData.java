@@ -1,6 +1,7 @@
 package mail.models;
 
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import java.util.List;
 
@@ -179,6 +180,11 @@ public class HeaderData {
     public HeaderData setReplyAddress(List<String> replyAddress) {
         this.replyAddress = replyAddress;
         return this;
+    }
+    
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
     
 }

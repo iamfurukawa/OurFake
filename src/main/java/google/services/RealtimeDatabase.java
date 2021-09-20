@@ -31,7 +31,7 @@ public class RealtimeDatabase extends Firebase {
     }
     
     public void createOrUpdate(final SMSMessage message) {
-        LOGGER.info("m=createOrUpdate stage=init data={}", message.toString());
+        LOGGER.info("m=createOrUpdate stage=init data={}", message);
         
         try {
             reference.updateChildrenAsync(message.toMap()).get();

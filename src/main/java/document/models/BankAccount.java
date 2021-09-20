@@ -1,6 +1,7 @@
 package document.models;
 
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 public class BankAccount {
     
@@ -87,8 +88,7 @@ public class BankAccount {
     
     @Override
     public String toString() {
-        return "BankAccount{" + "id='" + id + '\'' + ", account='" + account + '\'' + ", branch='" + branch + '\''
-                + ", bank='" + bank + '\'' + ", city='" + city + '\'' + ", state='" + state + '\'' + '}';
+        return ReflectionToStringBuilder.toString(this);
     }
     
 }

@@ -6,6 +6,8 @@ import document.generator.BankAccountService;
 import document.generator.Documents;
 import document.models.State;
 import google.services.RealtimeDatabase;
+import mail.models.Inbox;
+import mail.models.InboxMail;
 import mail.services.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,10 @@ public class OurFake {
     
     private SMSMessage state = new SMSMessage();
     
+    private BankAccountService bankAccountService = new BankAccountService();
+    
+    private MailService mailService = new MailService();
+    
     public OurFake() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             if (realtimeDatabase != null) realtimeDatabase.createOrUpdate(state.setType(DISCONNECTED));
@@ -38,7 +44,7 @@ public class OurFake {
     
         setupPhoneCode(phoneNumber);
     
-        LOGGER.info("m=waitForPhoneCode stage=init");
+        LOGGER.info("m=waitForPhoneCode stage=init phoneNumber={}", phoneNumber);
         realtimeDatabase.createOrUpdate(state.setType(WAITING_FOR_UPDATES));
         
         try {
@@ -47,7 +53,7 @@ public class OurFake {
                 state = realtimeDatabase.retrieve();
                 
                 if(state.getType() == FLUTTER_HAS_CHANGED) {
-                    LOGGER.info("m=waitForPhoneCode stage=validate_retrieve sms_received={}", state.toString());
+                    LOGGER.info("m=waitForPhoneCode stage=validate_retrieve sms_received={}", state);
                     break;
                 }
                 
@@ -55,33 +61,76 @@ public class OurFake {
             }
     
             realtimeDatabase.createOrUpdate(state.setType(DISCONNECTED));
-            LOGGER.info("m=waitForPhoneCode stage=end");
+            LOGGER.info("m=waitForPhoneCode stage=end state={}", state);
             return Optional.of(state);
         } catch (Exception e) {
-            LOGGER.error("m=waitForPhoneCode stage=error stacktrace={}", e.toString());
+            LOGGER.error("m=waitForPhoneCode stage=error stacktrace={}", e);
             realtimeDatabase.createOrUpdate(state.setType(DISCONNECTED));
             return Optional.empty();
         }
     }
     
     private void setupPhoneCode(String phoneNumber) {
-        LOGGER.info("m=setupPhoneCode stage=init");
+        LOGGER.info("m=setupPhoneCode stage=init phoneNumber={}", phoneNumber);
         if(realtimeDatabase == null) realtimeDatabase = new RealtimeDatabase(phoneNumber);
         realtimeDatabase.createOrUpdate(state);
-        LOGGER.info("m=setupPhoneCode stage=end");
+        LOGGER.info("m=setupPhoneCode stage=end state={}", state);
     }
     
     public String generateCPF(boolean withMask) {
-        return Documents.generateCPF(withMask);
+        LOGGER.info("m=generateCPF stage=init withMask={}", withMask);
+        var cpf = Documents.generateCPF(withMask);
+        LOGGER.info("m=generateCPF stage=end cpf={}", cpf);
+        return cpf;
     }
     
     public String generateCNPJ(boolean withMask) {
-        return Documents.generateCNPJ(withMask);
+        LOGGER.info("m=generateCNPJ stage=init withMask={}", withMask);
+        var cnpj = Documents.generateCNPJ(withMask);
+        LOGGER.info("m=generateCNPJ stage=end cnpj={}", cnpj);
+        return cnpj;
     }
     
     public BankAccount generateBankAccount(Bank bank, State state) {
-        BankAccountService bankAccountService = new BankAccountService();
-        return bankAccountService.getBankAccountFrom(bank, state);
+        LOGGER.info("m=generateBankAccount stage=init bank={} state={}", bank, state);
+        var bankAccount = bankAccountService.getBankAccountFrom(bank, state);
+        LOGGER.info("m=generateBankAccount stage=end bankAccount={}", bankAccount);
+        return bankAccount;
+    }
+    
+    public Inbox createNewEmailBox() throws Exception {
+        LOGGER.info("m=createNewEmailBox stage=init");
+        var inbox = mailService.createNewMailBox();
+        LOGGER.info("m=createNewEmailBox stage=end inbox={}", inbox);
+        return inbox;
+    }
+    
+    public Inbox recoverEmailBox() throws Exception {
+        LOGGER.info("m=recoverEmailBox stage=init");
+        var inbox = mailService.recoverEmailBox();
+        LOGGER.info("m=recoverEmailBox stage=end inbox={}", inbox);
+        return inbox;
+    }
+    
+    public Inbox retrieveInbox() throws Exception {
+        LOGGER.info("m=retrieveInbox stage=init");
+        var inbox = mailService.retrieveDataMailBox();
+        LOGGER.info("m=retrieveInbox stage=end inbox={}", inbox);
+        return inbox;
+    }
+    
+    public Inbox increaseTime() throws Exception {
+        LOGGER.info("m=increaseTime stage=init");
+        var inbox = mailService.reset100Minutes();
+        LOGGER.info("m=increaseTime stage=end inbox={}", inbox);
+        return inbox;
+    }
+    
+    public InboxMail retrieveMailBy(String mailId) throws Exception {
+        LOGGER.info("m=retrieveMailBy stage=init mailId={}", mailId);
+        var inboxMail = mailService.retrieveInboxMail(mailId);
+        LOGGER.info("m=retrieveMailBy stage=end mail={}", inboxMail);
+        return inboxMail;
     }
     
     public static void main(String[] args) throws Exception {
@@ -94,16 +143,14 @@ public class OurFake {
 //        System.out.println(message);
         // System.out.println("\n\n\n\n\n\n");
         //System.out.println(ourFake.generateCPF(false));
-//        BankAccount acc = ourFake.generateBankAccount(Bank.BANCO_DO_BRASIL, State.SP);
-//        System.out.println(acc.toString());
-    
-        MailService ms = new MailService();
+        BankAccount acc = ourFake.generateBankAccount(Bank.BANCO_DO_BRASIL, State.SP);
+        System.out.println(acc);
 
-        var res =  ms.createNewMailBox();
-        System.out.println(res.toString()+"\n");
-        
-        var email = ms.retrieveInboxMail("welcome");
-        System.out.println(email.getHtml().get(0));
+//        var res =  ourFake.createNewEmailBox();
+//        System.out.println(res+"\n");
+//
+//        var email = ourFake.retrieveMailBy("welcome");
+//        System.out.println(email.getHtml().get(0));
 
     }
     

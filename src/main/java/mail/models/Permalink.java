@@ -1,5 +1,7 @@
 package mail.models;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 public class Permalink {
     
     private String host;
@@ -59,8 +61,7 @@ public class Permalink {
     
     @Override
     public String toString() {
-        return "PermalinkResponse{" + "host='" + host + '\'' + ", mail='" + mail + '\'' + ", url='" + url + '\''
-                + ", key='" + key + '\'' + ", time=" + time + '}';
+        return ReflectionToStringBuilder.toString(this);
     }
     
 }
