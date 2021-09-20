@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sms.models.SMSMessage;
 
-import java.io.IOException;
 import java.util.Optional;
 
 import static sms.models.SMSMessageType.*;
@@ -23,7 +22,7 @@ public class OurFake {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(OurFake.class);
     
-    public static final int RETRY_LIMIT = 50;
+    public static final int RETRY_LIMIT = 100;
     
     public static final Long ONE_SECOND = 1000L;
     
@@ -42,6 +41,10 @@ public class OurFake {
     }
     
     public Optional<SMSMessage> waitForPhoneCode(String phoneNumber) {
+        return waitForPhoneCode(phoneNumber, RETRY_LIMIT);
+    }
+    
+    public Optional<SMSMessage> waitForPhoneCode(String phoneNumber, int retryLimit) {
     
         setupPhoneCode(phoneNumber);
     
@@ -49,7 +52,7 @@ public class OurFake {
         realtimeDatabase.createOrUpdate(state.setType(WAITING_FOR_UPDATES));
         
         try {
-            for (int tentative = 0; tentative < RETRY_LIMIT; tentative++) {
+            for (int tentative = 0; tentative < retryLimit; tentative++) {
                 LOGGER.info("m=waitForPhoneCode stage=retry_retrieve tentative={}", tentative);
                 state = realtimeDatabase.retrieve();
                 
@@ -58,7 +61,7 @@ public class OurFake {
                     break;
                 }
                 
-                Thread.sleep(3 * ONE_SECOND);
+                Thread.sleep(3 * ONE_SECOND); //5 minutes by default 300 sec. (3 * 1000 * 100)
             }
     
             realtimeDatabase.createOrUpdate(state.setType(DISCONNECTED));
@@ -136,14 +139,16 @@ public class OurFake {
     
     public static void main(String[] args) throws Exception {
         OurFake ourFake = new OurFake();
-        //SMSMessage message = ourFake.waitForPhoneCode("12345678910").get();
+        var message = ourFake.waitForPhoneCode("12345678910", 50).get();
         
-        //System.out.println("\n\n\n\n\n\n");
-//        System.out.println(message.findDigits());
-//        System.out.println(message.getMessage());
-//        System.out.println(message);
-        // System.out.println("\n\n\n\n\n\n");
-        //System.out.println(ourFake.generateCPF(false));
+        System.out.println("\n\n\n\n\n\n");
+        System.out.println(message.findDigits());
+        System.out.println(message.getMessage());
+        System.out.println(message);
+        System.out.println("\n\n\n\n\n\n");
+        
+        System.out.println(ourFake.generateCPF(false));
+        
         BankAccount acc = ourFake.generateBankAccount(Bank.BANCO_DO_BRASIL, State.SP);
         System.out.println(acc);
 
