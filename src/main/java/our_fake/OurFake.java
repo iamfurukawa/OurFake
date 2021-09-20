@@ -53,7 +53,7 @@ public class OurFake {
         
         try {
             for (int tentative = 0; tentative < retryLimit; tentative++) {
-                LOGGER.info("m=waitForPhoneCode stage=retry_retrieve tentative={}", tentative);
+                LOGGER.info("m=waitForPhoneCode stage=retry_retrieve tentative={} of {}", tentative, retryLimit);
                 state = realtimeDatabase.retrieve();
                 
                 if(state.getType() == FLUTTER_HAS_CHANGED) {
