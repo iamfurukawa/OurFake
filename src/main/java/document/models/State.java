@@ -7,14 +7,14 @@ public enum State {
     MA("MA"), MT("MT"), MS("MS"), MG("MG"), PR("PR"), PB("PB"), PA("PA"), PE("PE"), PI("PI"),
     RJ("RJ"), RN("RN"), RS("RS"), RO("RO"), RR("RR"), SC("SC"), SE("SE"), SP("SP"), TO("TO");
     
-    private String state;
+    private final String stateActual;
     
     State(String state) {
-        this.state = state;
+        this.stateActual = state;
     }
     
     public String getState() {
-        return state;
+        return stateActual;
     }
     
     @Override

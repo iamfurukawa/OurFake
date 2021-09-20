@@ -7,6 +7,7 @@ import document.generator.Documents;
 import document.models.State;
 import google.services.RealtimeDatabase;
 import mail.models.Inbox;
+import mail.models.InboxItem;
 import mail.models.InboxMail;
 import mail.services.MailService;
 import org.slf4j.Logger;
@@ -126,9 +127,9 @@ public class OurFake {
         return inbox;
     }
     
-    public InboxMail retrieveMailBy(String mailId) throws Exception {
-        LOGGER.info("m=retrieveMailBy stage=init mailId={}", mailId);
-        var inboxMail = mailService.retrieveInboxMail(mailId);
+    public InboxMail retrieveMailBy(InboxItem email) throws Exception {
+        LOGGER.info("m=retrieveMailBy stage=init mailId={}", email);
+        var inboxMail = mailService.retrieveInboxMail(email.getEmailId());
         LOGGER.info("m=retrieveMailBy stage=end mail={}", inboxMail);
         return inboxMail;
     }
@@ -146,11 +147,11 @@ public class OurFake {
         BankAccount acc = ourFake.generateBankAccount(Bank.BANCO_DO_BRASIL, State.SP);
         System.out.println(acc);
 
-//        var res =  ourFake.createNewEmailBox();
-//        System.out.println(res+"\n");
-//
-//        var email = ourFake.retrieveMailBy("welcome");
-//        System.out.println(email.getHtml().get(0));
+        var res =  ourFake.createNewEmailBox();
+        System.out.println(res+"\n");
+
+        var email = ourFake.retrieveMailBy(res.getMailList().get(0));
+        System.out.println(email.getHtml().get(0));
 
     }
     

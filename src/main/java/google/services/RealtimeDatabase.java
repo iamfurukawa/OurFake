@@ -35,9 +35,7 @@ public class RealtimeDatabase extends Firebase {
         
         try {
             reference.updateChildrenAsync(message.toMap()).get();
-        } catch (InterruptedException e) {
-            LOGGER.error("m=createOrUpdate stage=error stacktrace={}", e.getStackTrace());
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             LOGGER.error("m=createOrUpdate stage=error stacktrace={}", e.getStackTrace());
         }
         

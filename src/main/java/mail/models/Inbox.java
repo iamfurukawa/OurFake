@@ -3,7 +3,6 @@ package mail.models;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Inbox {
@@ -159,7 +158,7 @@ public class Inbox {
         return mailList;
     }
     
-    public Inbox setMailList(ArrayList<InboxItem> mailList) {
+    public Inbox setMailList(List<InboxItem> mailList) {
         this.mailList = mailList;
         return this;
     }

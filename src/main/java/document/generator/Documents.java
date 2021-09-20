@@ -15,6 +15,8 @@ public class Documents {
     
     private static final SecureRandom RND = new SecureRandom();
     
+    private Documents() { }
+    
     public static String generateCPF(boolean withMask) {
         LOGGER.info("m=generateCPF stage=init withMask={}", withMask);
         var cpf = gerarCPFCNPJ(9, MULTIPLICADORES_CPF);

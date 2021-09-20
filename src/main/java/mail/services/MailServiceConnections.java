@@ -3,8 +3,6 @@ package mail.services;
 import mail.models.InboxMail;
 import mail.models.Inbox;
 
-import java.io.IOException;
-
 public interface MailServiceConnections {
     
     String URL_INFO = "https://10minutemail.net/address.api.php";

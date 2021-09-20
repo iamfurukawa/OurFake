@@ -10,6 +10,8 @@ import java.security.NoSuchAlgorithmException;
 public class MD5 {
     private static final Logger LOGGER = LoggerFactory.getLogger(MD5.class);
     
+    private MD5() {}
+    
     public static String generateHash(String message) {
         LOGGER.info("m=generateHash stage=init message={}", message);
         
