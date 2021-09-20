@@ -45,10 +45,10 @@ public class OurFake {
     }
     
     public Optional<SMSMessage> waitForPhoneCode(String phoneNumber, int retryLimit) {
+        LOGGER.info("m=waitForPhoneCode stage=init phoneNumber={} retryLimit={}", phoneNumber, retryLimit);
     
         setupPhoneCode(phoneNumber);
     
-        LOGGER.info("m=waitForPhoneCode stage=init phoneNumber={}", phoneNumber);
         realtimeDatabase.createOrUpdate(state.setType(WAITING_FOR_UPDATES));
         
         try {
