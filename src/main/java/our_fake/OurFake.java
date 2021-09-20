@@ -137,27 +137,4 @@ public class OurFake {
         return inboxMail;
     }
     
-    public static void main(String[] args) throws Exception {
-        OurFake ourFake = new OurFake();
-        var message = ourFake.waitForPhoneCode("12345678910", 50).get();
-        
-        System.out.println("\n\n\n\n\n\n");
-        System.out.println(message.findDigits());
-        System.out.println(message.getMessage());
-        System.out.println(message);
-        System.out.println("\n\n\n\n\n\n");
-        
-        System.out.println(ourFake.generateCPF(false));
-        
-        BankAccount acc = ourFake.generateBankAccount(Bank.BANCO_DO_BRASIL, State.SP);
-        System.out.println(acc);
-
-        var res =  ourFake.createNewEmailBox();
-        System.out.println(res+"\n");
-
-        var email = ourFake.retrieveMailBy(res.getMailList().get(0));
-        System.out.println(email.getHtml().get(0));
-
-    }
-    
 }
