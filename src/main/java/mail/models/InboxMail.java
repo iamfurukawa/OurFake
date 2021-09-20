@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Email {
+public class InboxMail {
     
     private String from;
     
@@ -46,7 +46,7 @@ public class Email {
         return from;
     }
     
-    public Email setFrom(String from) {
+    public InboxMail setFrom(String from) {
         this.from = from;
         return this;
     }
@@ -55,7 +55,7 @@ public class Email {
         return gravatar;
     }
     
-    public Email setGravatar(String gravatar) {
+    public InboxMail setGravatar(String gravatar) {
         this.gravatar = gravatar;
         return this;
     }
@@ -64,7 +64,7 @@ public class Email {
         return to;
     }
     
-    public Email setTo(String to) {
+    public InboxMail setTo(String to) {
         this.to = to;
         return this;
     }
@@ -73,7 +73,7 @@ public class Email {
         return subject;
     }
     
-    public Email setSubject(String subject) {
+    public InboxMail setSubject(String subject) {
         this.subject = subject;
         return this;
     }
@@ -82,7 +82,7 @@ public class Email {
         return datetime;
     }
     
-    public Email setDatetime(String datetime) {
+    public InboxMail setDatetime(String datetime) {
         this.datetime = datetime;
         return this;
     }
@@ -91,7 +91,7 @@ public class Email {
         return timestamp;
     }
     
-    public Email setTimestamp(float timestamp) {
+    public InboxMail setTimestamp(float timestamp) {
         this.timestamp = timestamp;
         return this;
     }
@@ -100,7 +100,7 @@ public class Email {
         return datetime2;
     }
     
-    public Email setDatetime2(String datetime2) {
+    public InboxMail setDatetime2(String datetime2) {
         this.datetime2 = datetime2;
         return this;
     }
@@ -109,7 +109,7 @@ public class Email {
         return urls;
     }
     
-    public Email setUrls(List<String> urls) {
+    public InboxMail setUrls(List<String> urls) {
         this.urls = urls;
         return this;
     }
@@ -118,7 +118,7 @@ public class Email {
         return body;
     }
     
-    public Email setBody(List<BodyData> body) {
+    public InboxMail setBody(List<BodyData> body) {
         this.body = body;
         return this;
     }
@@ -127,7 +127,7 @@ public class Email {
         return attachment;
     }
     
-    public Email setAttachment(List<Object> attachment) {
+    public InboxMail setAttachment(List<Object> attachment) {
         this.attachment = attachment;
         return this;
     }
@@ -136,7 +136,7 @@ public class Email {
         return headerData;
     }
     
-    public Email setHeaderData(HeaderData headerData) {
+    public InboxMail setHeaderData(HeaderData headerData) {
         this.headerData = headerData;
         return this;
     }
@@ -145,7 +145,7 @@ public class Email {
         return plain;
     }
     
-    public Email setPlain(String plain) {
+    public InboxMail setPlain(String plain) {
         this.plain = plain;
         return this;
     }
@@ -154,7 +154,7 @@ public class Email {
         return plainLink;
     }
     
-    public Email setPlainLink(String plainLink) {
+    public InboxMail setPlainLink(String plainLink) {
         this.plainLink = plainLink;
         return this;
     }
@@ -163,7 +163,7 @@ public class Email {
         return rawHtml;
     }
     
-    public Email setRawHtml(List<String> rawHtml) {
+    public InboxMail setRawHtml(List<String> rawHtml) {
         this.rawHtml = rawHtml;
         return this;
     }
@@ -172,7 +172,7 @@ public class Email {
         return html;
     }
     
-    public Email setHtml(List<String> html) {
+    public InboxMail setHtml(List<String> html) {
         this.html = html;
         return this;
     }
@@ -181,7 +181,7 @@ public class Email {
         return htmlToPlain;
     }
     
-    public Email setHtmlToPlain(List<String> htmlToPlain) {
+    public InboxMail setHtmlToPlain(List<String> htmlToPlain) {
         this.htmlToPlain = htmlToPlain;
         return this;
     }

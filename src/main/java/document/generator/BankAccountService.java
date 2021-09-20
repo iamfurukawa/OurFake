@@ -7,8 +7,12 @@ import document.models.State;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BankAccountService {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(BankAccountService.class);
     
     private static final String BASE_URL = "https://www.invertexto.com/ajax/gerar-conta-bancaria.php";
     
@@ -16,7 +20,8 @@ public class BankAccountService {
     
     private final Gson gson = new Gson();
     
-    public BankAccount getBankAccount(Bank bank, State state) {
+    public BankAccount getBankAccountFrom(Bank bank, State state) {
+        LOGGER.info("m=getBankAccount stage=init bank={} state={}", bank.toString(), state.toString());
         //This API is based on https://www.invertexto.com/gerador-de-conta-bancaria
     
         var formBody = new FormBody.Builder()
@@ -29,14 +34,19 @@ public class BankAccountService {
                 .build();
         
         try {
-            var response = client.newCall(request)
-                    .execute();
-            return gson.fromJson(response.body().string(), BankAccount.class);
+            var responseApi = client.newCall(request).execute();
+            var response = gson.fromJson(responseApi.body().string(), BankAccount.class);
+            LOGGER.info("m=getBankAccount stage=end response={}", response.toString());
+            return response;
         } catch (Exception e) {
-            System.out.println("ERRO");
-            e.printStackTrace();
-            return new BankAccount().setBranch("4869").setBank(Bank.BANCO_DO_BRASIL).setState(State.SP)
-                    .setCity("Sao Bernardo Do Campo").setAccount("1239459-9").setId("1");
+            LOGGER.error("m=getBankAccount stage=error returning default bank. stacktrace={}", e.getStackTrace());
+            return new BankAccount()
+                    .setBranch("4869")
+                    .setBank(Bank.BANCO_DO_BRASIL)
+                    .setState(State.SP)
+                    .setCity("Sao Bernardo Do Campo")
+                    .setAccount("1239459-9")
+                    .setId("1");
         }
     }
 }

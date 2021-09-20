@@ -1,6 +1,5 @@
 package security.services;
 
-import google.services.Firebase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

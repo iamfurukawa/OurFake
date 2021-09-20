@@ -58,7 +58,7 @@ public class OurFake {
             LOGGER.info("m=waitForPhoneCode stage=end");
             return Optional.of(state);
         } catch (Exception e) {
-            LOGGER.info("m=waitForPhoneCode stage=error stacktrace={}", e.toString());
+            LOGGER.error("m=waitForPhoneCode stage=error stacktrace={}", e.toString());
             realtimeDatabase.createOrUpdate(state.setType(DISCONNECTED));
             return Optional.empty();
         }
@@ -81,10 +81,10 @@ public class OurFake {
     
     public BankAccount generateBankAccount(Bank bank, State state) {
         BankAccountService bankAccountService = new BankAccountService();
-        return bankAccountService.getBankAccount(bank, state);
+        return bankAccountService.getBankAccountFrom(bank, state);
     }
     
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws Exception {
         OurFake ourFake = new OurFake();
         //SMSMessage message = ourFake.waitForPhoneCode("12345678910").get();
         
@@ -92,6 +92,7 @@ public class OurFake {
 //        System.out.println(message.findDigits());
 //        System.out.println(message.getMessage());
 //        System.out.println(message);
+        // System.out.println("\n\n\n\n\n\n");
         //System.out.println(ourFake.generateCPF(false));
 //        BankAccount acc = ourFake.generateBankAccount(Bank.BANCO_DO_BRASIL, State.SP);
 //        System.out.println(acc.toString());
@@ -103,8 +104,7 @@ public class OurFake {
         
         var email = ms.retrieveInboxMail("welcome");
         System.out.println(email.getHtml().get(0));
-    
-        //System.out.println("\n\n\n\n\n\n");
+
     }
     
 }

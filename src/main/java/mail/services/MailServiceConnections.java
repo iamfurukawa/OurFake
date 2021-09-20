@@ -1,5 +1,10 @@
 package mail.services;
 
+import mail.models.InboxMail;
+import mail.models.Inbox;
+
+import java.io.IOException;
+
 public interface MailServiceConnections {
     
     String URL_INFO = "https://10minutemail.net/address.api.php";
@@ -14,4 +19,15 @@ public interface MailServiceConnections {
     
     String URL_MAIL_CONTENT = "https://10minutemail.net/mail.api.php?mailid=";
     
+    Inbox createNewMailBox() throws Exception;
+    
+    Inbox recoverEmailBox() throws Exception;
+    
+    Inbox retrieveDataMailBox() throws Exception;
+    
+    InboxMail retrieveInboxMail(String mailId) throws Exception;
+    
+    Inbox reset10Minutes() throws Exception;
+    
+    Inbox reset100Minutes() throws Exception;
 }
